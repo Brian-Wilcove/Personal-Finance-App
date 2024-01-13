@@ -2,6 +2,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const mongoose = require('mongoose')
 const util = require('util')
 
 const plaidRoutes = require('./routes/plaidRoutes')
@@ -41,8 +42,13 @@ const prettyPrintResponse = (response) => {
     console.log(util.inspect(response.data, { colors: true, depth: 4 }));
 };
 
-//start app
-app.listen(process.env.PORT, () => {
-    console.log('Listening on Port', process.env.PORT)
+//start app & connect to db
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(process.env.PORT, () => {
+            console.log('connected to db & listening on port', process.env.PORT)
+        })
+}).catch((e) => {
+    console.log(e)
 })
 

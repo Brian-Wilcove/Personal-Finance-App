@@ -10,7 +10,11 @@ const plaidRoutes = require('./routes/plaidRoutes')
 const app = express()
 
 // middleware
+app.use(express.urlencoded({
+    extended: false,
+}))
 app.use(express.json())
+
 
 app.use((req, res, next) => {
     console.log(req.path, req.method)

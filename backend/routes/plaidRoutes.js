@@ -1,12 +1,22 @@
 const express = require('express')
-const { info, createLinkToken, setAccessToken, getBalance } = require('../controllers/plaidController')
+const { createLinkToken, setAccessToken, getBalances, updateBalance, deleteItem } = require('../controllers/plaidController')
 
 const router = express.Router()
 
-router.post('/info', info)
+//create a Link Token
 router.post('/createLinkToken', createLinkToken)
+
+//Create and set an Item, Access Token, and log into DB
 router.post('/setAccessToken', setAccessToken)
-router.get('/balance', getBalance)
+
+//Delete a specific Item
+router.delete('/:id', deleteItem)
+
+//get all balances from DB
+router.get('/balance', getBalances)
+
+//update DB balance from Plaid
+router.patch('/balance/:id', updateBalance)
 
 
 module.exports = router
